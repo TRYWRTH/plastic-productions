@@ -3,7 +3,7 @@
 /* ---------------------------------------------------------------------- */
 
 :root {
-  --pp-a: #e26a2c;
+  --pp-a: #5a4bd6;
   --pp-cols: 4;
 
   --accent: var(--pp-a);
@@ -15,6 +15,11 @@
   --on-dark-body: rgba(242, 241, 237, 0.68);
   --hairline: rgba(19, 19, 19, 0.2);
   --hover-tint: color-mix(in srgb, var(--accent) 8%, transparent);
+
+  /* Text color for content sitting on a solid --accent fill. Violet is dark
+     enough that --ink fails AA contrast, so this reads --paper instead —
+     flip it back to --ink if --pp-a is swapped for a lighter accent. */
+  --on-accent: var(--paper);
 
   --gutter: 5vw;
   --section-pad: clamp(32px, 4vw, 56px);
@@ -163,7 +168,7 @@ h1, h2, h3, p { margin: 0; }
 .section--hero { padding-top: var(--hero-pad-top); }
 .section--no-border { border-bottom: none; }
 .section--dark { background: var(--ink); color: var(--on-dark); }
-.section--accent { background: var(--accent); color: var(--ink); }
+.section--accent { background: var(--accent); color: var(--on-accent); }
 
 .stack { display: flex; flex-direction: column; gap: 20px; }
 .stack--lg { gap: 40px; }
@@ -214,10 +219,13 @@ h1, h2, h3, p { margin: 0; }
 .btn--on-dark { border-color: var(--paper); color: var(--paper); }
 .btn--on-dark:hover { background: var(--paper); color: var(--ink); }
 
+.btn--on-accent { border-color: var(--on-accent); color: var(--on-accent); }
+.btn--on-accent:hover { background: var(--on-accent); color: var(--accent); }
+
 .btn--fill-ink { background: var(--ink); color: var(--paper); }
 .btn--fill-ink:hover { background: transparent; color: var(--ink); }
 
-.btn--fill-accent { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+.btn--fill-accent { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .btn--fill-accent:hover { background: transparent; color: var(--accent); }
 
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -326,7 +334,7 @@ h1, h2, h3, p { margin: 0; }
   inset: 0;
   z-index: 90;
   background: var(--accent);
-  color: var(--ink);
+  color: var(--on-accent);
   cursor: pointer;
   animation: ppLift .9s cubic-bezier(.76, 0, .24, 1) 3.05s forwards;
 }
@@ -389,7 +397,7 @@ h1, h2, h3, p { margin: 0; }
 .marquee {
   overflow: hidden;
   background: var(--accent);
-  color: var(--ink);
+  color: var(--on-accent);
   padding: 12px 0;
   border-bottom: 1px solid var(--ink);
 }
@@ -428,7 +436,7 @@ h1, h2, h3, p { margin: 0; }
 }
 
 .door--dark { background: var(--ink); color: var(--on-dark); border-left: 1px solid var(--ink); }
-.door--accent { background: var(--accent); color: var(--ink); border-left: 1px solid var(--ink); }
+.door--accent { background: var(--accent); color: var(--on-accent); border-left: 1px solid var(--ink); }
 
 @media (min-width: 641px) {
   .door--dark { border-left: 1px solid var(--paper); }

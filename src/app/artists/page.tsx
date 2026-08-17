@@ -27,11 +27,11 @@ export default function Artists() {
 
       <div className="doors">
         <div className="door door--accent">
-          <span className="mono" style={{ color: "var(--ink)" }}>
+          <span className="mono" style={{ color: "var(--on-accent)" }}>
             Open call — always open
           </span>
           <h2 className="h2">Send us your work</h2>
-          <Link href="/contact" className="btn">
+          <Link href="/contact" className="btn btn--on-accent">
             Submit →
           </Link>
         </div>
