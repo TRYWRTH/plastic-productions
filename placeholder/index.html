@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Plastic Productions — Coming Soon</title>
+<meta name="description" content="Plastic Productions is a Berlin art-and-performance collective. Site launching soon." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --accent: #5a4bd6;
+    --paper: #f2f1ed;
+    --ink: #131313;
+    --on-accent: var(--paper);
+    --gutter: 5vw;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+  }
+  body {
+    background: var(--accent);
+    color: var(--on-accent);
+    font-family: "Archivo", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  .stage-wrap {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--gutter);
+    text-align: center;
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(12px, 2vw, 22px);
+  }
+
+  .word {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 900 clamp(48px, 11vw, 150px)/1 "Archivo", sans-serif;
+    letter-spacing: -.05em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: wordShot .6s steps(1, end) both;
+  }
+
+  .word--brand {
+    position: static;
+    font: 900 clamp(34px, 7.6vw, 104px)/.95 "Archivo", sans-serif;
+    color: var(--on-accent);
+    opacity: 0;
+    animation: wordIn .4s ease forwards;
+    animation-delay: 1.86s;
+  }
+
+  .tagline {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(12px, 1.6vw, 16px);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0;
+    animation: wordIn .5s ease forwards;
+    animation-delay: 2.5s;
+  }
+
+  @keyframes wordShot {
+    0%        { opacity: 0; }
+    1%        { opacity: 1; }
+    90%       { opacity: 1; }
+    91%, 100% { opacity: 0; }
+  }
+
+  @keyframes wordIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .corner {
+    position: fixed;
+    bottom: 28px;
+    font: 500 11px/1 "IBM Plex Mono", monospace;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--on-accent);
+  }
+  .corner--left { left: var(--gutter); }
+  .corner--right { right: var(--gutter); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .word, .word--brand, .tagline { animation: none; opacity: 1; }
+    .word:not(.word--brand) { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="stage-wrap">
+    <div class="stage">
+      <div class="word" style="animation-delay: 0s">No stage</div>
+      <div class="word" style="animation-delay: .62s">No gate</div>
+      <div class="word" style="animation-delay: 1.24s">No filter</div>
+      <div class="word word--brand">Plastic Productions</div>
+      <div class="tagline">Coming soon</div>
+    </div>
+  </div>
+
+  <div class="corner corner--left">Berlin</div>
+  <div class="corner corner--right">Est. 2023</div>
+</body>
+</html>
