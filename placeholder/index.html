@@ -13,7 +13,8 @@
     --accent: #5a4bd6;
     --paper: #f2f1ed;
     --ink: #131313;
-    --ink-mute: #7a7670;
+    --on-accent: var(--paper);
+    --gutter: 5vw;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -21,158 +22,106 @@
     height: 100%;
   }
   body {
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--accent);
+    color: var(--on-accent);
     font-family: "Archivo", system-ui, sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    overflow: hidden;
   }
-  header {
+
+  .stage-wrap {
+    position: fixed;
+    inset: 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 5vw 5vw 0;
+    justify-content: center;
+    padding: 0 var(--gutter);
+    text-align: center;
   }
-  .word {
-    font-weight: 800;
-    font-size: clamp(14px, 1.6vw, 17px);
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-  }
-  .mono {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 12px;
-    letter-spacing: 0.02em;
-    color: var(--ink-mute);
-    text-transform: uppercase;
-  }
-  main {
-    flex: 1;
+
+  .stage {
+    position: relative;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 0 5vw;
-  }
-  .eyebrow {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 12px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 16px;
-  }
-  h1 {
-    margin: 0;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-    line-height: 0.94;
-    font-size: clamp(48px, 11vw, 140px);
-    max-width: 16ch;
-  }
-  .copy {
-    margin: 32px 0 0;
-    max-width: 46ch;
-    font-size: clamp(16px, 1.6vw, 19px);
-    line-height: 1.5;
-    color: var(--ink);
-  }
-  form {
-    margin-top: 40px;
-    display: flex;
-    gap: 8px;
-    max-width: 420px;
-    flex-wrap: wrap;
-  }
-  input[type="email"] {
-    flex: 1;
-    min-width: 220px;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(19, 19, 19, 0.3);
-    padding: 10px 2px;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 13px;
-    letter-spacing: 0.02em;
-    color: var(--ink);
-    outline: none;
-  }
-  input[type="email"]::placeholder { color: var(--ink-mute); }
-  input[type="email"]:focus { border-bottom-color: var(--accent); }
-  button {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 13px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    background: var(--ink);
-    color: var(--paper);
-    border: none;
-    padding: 12px 24px;
-    cursor: pointer;
-  }
-  button:hover { background: var(--accent); }
-  .form-status {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 12px;
-    margin-top: 12px;
-  }
-  footer {
-    padding: 24px 5vw 5vw;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+    gap: clamp(12px, 2vw, 22px);
   }
-  footer a { color: var(--ink); }
-  footer a:hover { color: var(--accent); }
+
+  .word {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 900 clamp(48px, 11vw, 150px)/1 "Archivo", sans-serif;
+    letter-spacing: -.05em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: wordShot .6s steps(1, end) both;
+  }
+
+  .word--brand {
+    position: static;
+    font: 900 clamp(34px, 7.6vw, 104px)/.95 "Archivo", sans-serif;
+    color: var(--on-accent);
+    opacity: 0;
+    animation: wordIn .4s ease forwards;
+    animation-delay: 1.86s;
+  }
+
+  .tagline {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(12px, 1.6vw, 16px);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0;
+    animation: wordIn .5s ease forwards;
+    animation-delay: 2.5s;
+  }
+
+  @keyframes wordShot {
+    0%        { opacity: 0; }
+    1%        { opacity: 1; }
+    90%       { opacity: 1; }
+    91%, 100% { opacity: 0; }
+  }
+
+  @keyframes wordIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .corner {
+    position: fixed;
+    bottom: 28px;
+    font: 500 11px/1 "IBM Plex Mono", monospace;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--on-accent);
+  }
+  .corner--left { left: var(--gutter); }
+  .corner--right { right: var(--gutter); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .word, .word--brand, .tagline { animation: none; opacity: 1; }
+    .word:not(.word--brand) { display: none; }
+  }
 </style>
 </head>
 <body>
-  <header>
-    <span class="word">Plastic Productions</span>
-    <span class="mono">Berlin</span>
-  </header>
+  <div class="stage-wrap">
+    <div class="stage">
+      <div class="word" style="animation-delay: 0s">No stage</div>
+      <div class="word" style="animation-delay: .62s">No gate</div>
+      <div class="word" style="animation-delay: 1.24s">No filter</div>
+      <div class="word word--brand">Plastic Productions</div>
+      <div class="tagline">Coming soon</div>
+    </div>
+  </div>
 
-  <main>
-    <span class="eyebrow">Art &amp; performance series · Since 2023</span>
-    <h1>Something's<br />coming.</h1>
-    <p class="copy">
-      We're rebuilding the home for Plastic Productions. In the meantime,
-      leave your email and we'll let you know the moment it's live.
-    </p>
-    <form id="notify-form" novalidate>
-      <input type="email" name="email" placeholder="YOUR EMAIL" aria-label="Email address" required />
-      <button type="submit">Notify me</button>
-    </form>
-    <p class="form-status" id="form-status" role="status"></p>
-  </main>
-
-  <footer>
-    <span class="mono">© <span id="year"></span> Plastic Productions</span>
-    <span class="mono">Berlin, DE</span>
-  </footer>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    var form = document.getElementById("notify-form");
-    var status = document.getElementById("form-status");
-    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-      var email = form.email.value.trim();
-      if (!emailPattern.test(email)) {
-        status.textContent = "Enter a valid email address.";
-        return;
-      }
-      // Not wired to a real signup provider yet.
-      status.textContent = "Thanks — we'll be in touch.";
-      form.reset();
-    });
-  </script>
+  <div class="corner corner--left">Berlin</div>
+  <div class="corner corner--right">Est. 2023</div>
 </body>
 </html>
