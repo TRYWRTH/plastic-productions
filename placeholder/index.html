@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Plastic Productions — Coming Soon</title>
+<meta name="description" content="Plastic Productions is a Berlin art-and-performance collective. Site launching soon." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --accent: #5a4bd6;
+    --paper: #f2f1ed;
+    --ink: #131313;
+    --ink-mute: #7a7670;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5vw 5vw 0;
+  }
+  .word {
+    font-weight: 800;
+    font-size: clamp(14px, 1.6vw, 17px);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .mono {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 5vw;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 16px;
+  }
+  h1 {
+    margin: 0;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 0.94;
+    font-size: clamp(48px, 11vw, 140px);
+    max-width: 16ch;
+  }
+  .copy {
+    margin: 32px 0 0;
+    max-width: 46ch;
+    font-size: clamp(16px, 1.6vw, 19px);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  form {
+    margin-top: 40px;
+    display: flex;
+    gap: 8px;
+    max-width: 420px;
+    flex-wrap: wrap;
+  }
+  input[type="email"] {
+    flex: 1;
+    min-width: 220px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(19, 19, 19, 0.3);
+    padding: 10px 2px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    outline: none;
+  }
+  input[type="email"]::placeholder { color: var(--ink-mute); }
+  input[type="email"]:focus { border-bottom-color: var(--accent); }
+  button {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+  }
+  button:hover { background: var(--accent); }
+  .form-status {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    margin-top: 12px;
+  }
+  footer {
+    padding: 24px 5vw 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  footer a { color: var(--ink); }
+  footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+  <header>
+    <span class="word">Plastic Productions</span>
+    <span class="mono">Berlin</span>
+  </header>
+
+  <main>
+    <span class="eyebrow">Art &amp; performance series · Since 2023</span>
+    <h1>Something's<br />coming.</h1>
+    <p class="copy">
+      We're rebuilding the home for Plastic Productions. In the meantime,
+      leave your email and we'll let you know the moment it's live.
+    </p>
+    <form id="notify-form" novalidate>
+      <input type="email" name="email" placeholder="YOUR EMAIL" aria-label="Email address" required />
+      <button type="submit">Notify me</button>
+    </form>
+    <p class="form-status" id="form-status" role="status"></p>
+  </main>
+
+  <footer>
+    <span class="mono">© <span id="year"></span> Plastic Productions</span>
+    <span class="mono">Berlin, DE</span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    var form = document.getElementById("notify-form");
+    var status = document.getElementById("form-status");
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var email = form.email.value.trim();
+      if (!emailPattern.test(email)) {
+        status.textContent = "Enter a valid email address.";
+        return;
+      }
+      // Not wired to a real signup provider yet.
+      status.textContent = "Thanks — we'll be in touch.";
+      form.reset();
+    });
+  </script>
+</body>
+</html>
