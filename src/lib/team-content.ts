@@ -15,30 +15,8 @@ export const fileLinks: FileLink[] = [
   { label: "Press & photo archive", url: "#", note: "Drive folder" },
 ];
 
-export type UpdateItem = {
-  date: string;
-  author: string;
-  body: string;
-};
-
-// Most recent first.
-export const updates: UpdateItem[] = [
-  {
-    date: "02.09.2026",
-    author: "Team",
-    body: "Night 015 venue confirmed — Kreuzberg warehouse, load-in 14:00.",
-  },
-  {
-    date: "28.08.2026",
-    author: "Team",
-    body: "Brand proposal sent to Client X, waiting on sign-off.",
-  },
-  {
-    date: "20.08.2026",
-    author: "Team",
-    body: "New roster submissions open for review in the shared folder.",
-  },
-];
+// The updates board itself lives in src/lib/team-updates.ts (backed by
+// Redis, editable from the /team page) rather than here.
 
 export type Meeting = {
   date: string;

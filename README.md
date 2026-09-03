@@ -55,9 +55,31 @@ search indexing (`robots.txt`).
   for deployment — see `.env.example`):
   - `TEAM_PORTAL_PASSWORD` — the shared password.
   - `TEAM_PORTAL_SECRET` — random signing key, e.g. `openssl rand -hex 32`.
-- Content lives in `src/lib/team-content.ts` (plans, file links, updates,
-  meetings) — edit that file directly to keep it current; it's placeholder
-  data to start.
+  - `KV_REST_API_URL` / `KV_REST_API_TOKEN` — a Redis store for the updates
+    board (see below).
+- Plans, file links and meetings live in `src/lib/team-content.ts` — edit
+  that file directly (e.g. via GitHub's web editor) to keep it current;
+  it's placeholder data to start. Vercel redeploys automatically on push.
+
+### Updates board
+
+The "what's going on" board on `/team` is a real shared list team members
+post to from the page itself — not a file you edit. It's backed by a Redis
+store (`src/lib/team-updates.ts`, via `@upstash/redis`) rather than static
+content, since it needs to be written to at runtime.
+
+Setup (one-time, on the Vercel project):
+1. Vercel dashboard → Storage → Create Database → **Redis** (Upstash-backed).
+2. Connect it to this project — Vercel adds `KV_REST_API_URL` and
+   `KV_REST_API_TOKEN` automatically.
+3. Redeploy (or it'll pick the vars up on the next deploy).
+
+For local dev, run `vercel env pull .env.local` after connecting, or copy
+the two values from the store's dashboard into your `.env.local`.
+
+Posting is add-only (no edit/delete yet) and requires being logged into
+`/team` — `src/middleware.ts` covers `/api/team/updates` too, so the API
+route can't be posted to without a valid session.
 - For stronger protection than a shared password (per-person accounts,
   audit trail), swap the password check in the login route for a real auth
   provider later — the middleware/cookie plumbing around it stays the same.

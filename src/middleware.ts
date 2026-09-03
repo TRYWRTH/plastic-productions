@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { TEAM_SESSION_COOKIE, isValidSessionToken } from "@/lib/team-auth";
 
 export const config = {
-  matcher: ["/team/:path*"],
+  matcher: ["/team/:path*", "/api/team/updates/:path*"],
 };
 
 // Node runtime (not Edge) so this can use Node's crypto module for

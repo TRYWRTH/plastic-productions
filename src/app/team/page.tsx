@@ -1,12 +1,13 @@
 import TeamLogoutButton from "@/components/TeamLogoutButton";
-import {
-  currentPlans,
-  fileLinks,
-  updates,
-  upcomingMeetings,
-} from "@/lib/team-content";
+import UpdatesBoard from "@/components/UpdatesBoard";
+import { currentPlans, fileLinks, upcomingMeetings } from "@/lib/team-content";
+import { listUpdates } from "@/lib/team-updates";
 
-export default function TeamPortal() {
+export const dynamic = "force-dynamic";
+
+export default async function TeamPortal() {
+  const updates = await listUpdates();
+
   return (
     <>
       <section className="section section--hero gutter">
@@ -74,16 +75,7 @@ export default function TeamPortal() {
         <h2 className="mono" style={{ marginBottom: 20 }}>
           Updates
         </h2>
-        <div className="stack" style={{ gap: 20 }}>
-          {updates.map((update) => (
-            <div key={`${update.date}-${update.body}`} className="stack" style={{ gap: 4 }}>
-              <span className="mono-meta">
-                {update.date} · {update.author}
-              </span>
-              <p style={{ margin: 0 }}>{update.body}</p>
-            </div>
-          ))}
-        </div>
+        <UpdatesBoard updates={updates} />
       </section>
     </>
   );
