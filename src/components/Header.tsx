@@ -4,88 +4,83 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const NAV_LINKS = [
-  { href: "/about", label: "About" },
-  { href: "/artists", label: "Artists" },
-  { href: "/brands", label: "For brands" },
-  { href: "/contact", label: "Contact" },
+const NAV = [
+  { href: "/#answer", label: "Services", path: null },
+  { href: "/#talent", label: "Talent", path: null },
+  { href: "/about", label: "About us", path: "/about" },
+  { href: "/contact", label: "Contact", path: "/contact" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const current = (p: string | null) =>
+    p && pathname?.replace(/\/$/, "") === p ? "page" : undefined;
 
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
     };
-  }, [menuOpen]);
+  }, [open]);
+
+  const close = () => setOpen(false);
 
   return (
-    <>
-      <header className="site-header">
-        <Link href="/" className="site-header__word">
+    <header className="header">
+      <div className="wrap header__inner">
+        <Link href="/" className="wordmark">
           Plastic Productions
         </Link>
-        <nav className="site-nav" aria-label="Primary">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={pathname === link.href ? "page" : undefined}
-            >
-              {link.label}
+        <nav className="nav" aria-label="Main">
+          {NAV.map((n) => (
+            <Link key={n.href} href={n.href} className="nav__link" aria-current={current(n.path)}>
+              {n.label}
             </Link>
           ))}
+          <Link href="/contact" className="btn btn--primary btn--sm">
+            Book a meeting
+          </Link>
         </nav>
         <button
           type="button"
-          className="nav-toggle"
-          aria-expanded={menuOpen}
-          aria-controls="mobile-nav"
-          onClick={() => setMenuOpen(true)}
+          className="menu-btn"
+          aria-expanded={open}
+          aria-controls="menu-overlay"
+          onClick={() => setOpen(true)}
         >
           Menu
         </button>
-      </header>
+      </div>
 
-      {menuOpen && (
-        <div id="mobile-nav" className="mobile-nav" role="dialog" aria-modal="true">
-          <div className="mobile-nav__top">
-            <span className="site-header__word" style={{ color: "var(--on-dark)" }}>
+      {open && (
+        <div id="menu-overlay" className="overlay" role="dialog" aria-modal="true" aria-label="Menu">
+          <div className="wrap header__inner">
+            <Link href="/" className="wordmark" onClick={close}>
               Plastic Productions
-            </span>
-            <button
-              type="button"
-              className="mobile-nav__close"
-              onClick={() => setMenuOpen(false)}
-            >
+            </Link>
+            <button type="button" className="menu-btn" onClick={close} autoFocus>
               Close
             </button>
           </div>
-          <nav className="mobile-nav__links" aria-label="Primary">
-            <Link
-              href="/"
-              aria-current={pathname === "/" ? "page" : undefined}
-              onClick={() => setMenuOpen(false)}
-            >
-              Home
-            </Link>
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={pathname === link.href ? "page" : undefined}
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.label}
+          <nav className="wrap overlay__nav" aria-label="Main">
+            {NAV.map((n) => (
+              <Link key={n.href} href={n.href} className="overlay__link" aria-current={current(n.path)} onClick={close}>
+                {n.label}
               </Link>
             ))}
+            <div style={{ marginTop: 24 }}>
+              <Link href="/contact" className="btn btn--primary" onClick={close}>
+                Book a meeting
+              </Link>
+            </div>
           </nav>
         </div>
       )}
-    </>
+    </header>
   );
 }

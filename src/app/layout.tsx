@@ -1,42 +1,33 @@
 import type { Metadata } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Intro from "@/components/Intro";
 import "./globals.css";
 
-const archivo = Archivo({
+const interTight = Inter_Tight({
   subsets: ["latin"],
-  weight: ["400", "500", "800", "900"],
-  variable: "--font-archivo",
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono",
+  weight: ["400", "500", "600"],
+  variable: "--font-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Plastic Productions — Art & Performance, Berlin",
+    default: "Plastic Productions — Independent art and performance for brands",
     template: "%s — Plastic Productions",
   },
   description:
-    "Plastic Productions is a Berlin art-and-performance collective: nights for the community, and artists for hire for brand and agency events.",
+    "Plastic Productions makes the independent arts and performance scene accessible to brands. Berlin and Stockholm.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${archivo.variable} ${plexMono.variable}`}>
+    <html lang="en" className={interTight.variable}>
       <body>
-        <Intro />
         <Header />
-        <main className="pp-main">{children}</main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
