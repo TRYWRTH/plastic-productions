@@ -1,23 +1,26 @@
 # Plastic Productions
 
-Marketing site for Plastic Productions, a Berlin art-and-performance
-collective. Five routes (Home, About, Artists, For brands, Contact) plus a
-newsletter footer and a one-shot full-screen intro animation on first visit
-per session.
+Website for Plastic Productions — the independent arts and performance scene,
+made accessible to brands. Berlin and Stockholm.
 
-Built from the design handoff in `design_handoff_plastic_productions/` —
-recreated pixel-faithfully in Next.js (App Router, static export) with the
-design tokens converted into real CSS custom properties and component
-classes (`src/app/globals.css`).
-
-All body copy, artist names, event titles and stats are **placeholders** —
-see `src/lib/content.ts`. Replace with real content before launch.
+Routes: `/` (home, told as a story in scenes), `/about`, `/contact`.
 
 ## Stack
 
-- Next.js 16 (App Router), static export (`output: 'export'`)
-- Plain CSS with custom properties — no CSS framework
-- `next/font` self-hosts Archivo and IBM Plex Mono (Google Fonts)
+- Next.js 16 (App Router), static export (`output: 'export'`) to `out/`
+- Plain CSS with custom properties (`src/app/globals.css`), no framework
+- Inter Tight via `next/font/google`
+- Scroll reveals are CSS-only (`animation-timeline: view()`), with a
+  reduced-motion fallback
+
+## Content you still need to fill in
+
+- **Images:** put files in `public/images/` and set `src` for each slot in
+  `src/lib/images.ts`. Slots without a `src` show a coloured placeholder.
+- **Email addresses:** `src/lib/site.ts` holds placeholder addresses
+  (`REPLACE-…@yourdomain`). The contact form has no backend; it opens the
+  visitor's email app with a prefilled `mailto:` message.
+- Imprint and Privacy links in the footer point to `#`.
 
 ## Develop
 
@@ -31,11 +34,3 @@ npm run dev
 ```bash
 npm run build
 ```
-
-Outputs a static site to `out/`.
-
-## Known gaps (flagged in the design handoff)
-
-- Contact form and newsletter form are not wired to a backend/provider yet.
-- No real images — every visual is a striped placeholder slot.
-- Press kit / Instagram footer links are placeholders (`#`).
